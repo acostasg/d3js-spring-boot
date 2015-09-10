@@ -38,6 +38,7 @@ dependencies {
   compile("org.springframework.boot:spring-boot-starter-web")
   compile("org.springframework.boot:spring-boot-devtools")
   compile("org.webjars:d3js:3.5.6")
+  compile("org.webjars:jquery:2.1.4")
   testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
