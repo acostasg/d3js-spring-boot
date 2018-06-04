@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+
+ server-api:
+  build: .
+  volumes:
+   - ./build/libs:/home
+  ports:
+   - "8888:8080"
+  tty:
+    true
+  restart:
+    unless-stopped

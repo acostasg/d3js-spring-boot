@@ -21,8 +21,8 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-  baseName = 'spring-boot-sample-web-static'
-  version =  '0.0.0'
+  baseName = 'spring-boot-d3js-web-static'
+  version =  '1'
 }
 
 repositories {
