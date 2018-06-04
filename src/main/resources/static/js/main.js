@@ -1,6 +1,6 @@
-var config = { columnWidth: 20, columnHeight: 235, columnGap: 5, padding: 100};
+var config = {columnWidth: 20, columnHeight: 235, columnGap: 5, padding: 100};
 
-var ES_es = d3.locale ({
+var ES_es = d3.locale({
     "decimal": ",",
     "thousands": ".",
     "grouping": [3],
@@ -17,16 +17,20 @@ var ES_es = d3.locale ({
 
 var _format = ES_es.numberFormat("$,0f");
 
-function renderData(datos){
+function renderData(datos) {
     var NUM_COLUMNAS = datos.length;
     config.width = NUM_COLUMNAS * (config.columnWidth + config.columnGap) + (2 * config.padding);
     config.height = config.columnHeight + 2 * config.padding;
 
-    var SALARIO_MAX = d3.max(datos, function(d) { return +d.salarioMedio; });
+    var SALARIO_MAX = d3.max(datos, function (d) {
+        return +d.salarioMedio;
+    });
 
     var x = d3.scale.ordinal()
         .rangeRoundBands([0, config.width - 2 * config.padding])
-        .domain(datos.map(function(d) { return d.nombre; }));
+        .domain(datos.map(function (d) {
+            return d.nombre;
+        }));
 
     var y = d3.scale.linear()
         .range([0, config.columnHeight])
@@ -49,7 +53,7 @@ function renderData(datos){
     var tooltip = d3.tip()
         .attr('class', 'tooltip')
         .offset([-10, 0])
-        .html(function(d) {
+        .html(function (d) {
             return "<strong>" + d.nombre + "</strong><br> salario medio: " + _format(+d.salarioMedio);
         });
 
@@ -79,25 +83,35 @@ function renderData(datos){
         .data(datos)
         .enter().append("rect")
         .attr("width", config.columnWidth)
-        .attr("x", function(d,i) { return config.padding + x(d.nombre) })
-        .attr("y", function(d,i) { return config.padding + config.columnHeight - y(d.salarioMedio) })
-        .attr("height", function(d,i) { return y(d.salarioMedio) })
-        .attr("data-nombre", function(d,i) { return d.nombre })
-        .attr("data-salarioMerdio", function(d,i) { return _format(+d.salarioMedio) })
+        .attr("x", function (d, i) {
+            return config.padding + x(d.nombre)
+        })
+        .attr("y", function (d, i) {
+            return config.padding + config.columnHeight - y(d.salarioMedio)
+        })
+        .attr("height", function (d, i) {
+            return y(d.salarioMedio)
+        })
+        .attr("data-nombre", function (d, i) {
+            return d.nombre
+        })
+        .attr("data-salarioMerdio", function (d, i) {
+            return _format(+d.salarioMedio)
+        })
         .on('mouseover', tooltip.show)
         .on('mouseout', tooltip.hide)
 
 }
 
-$( document ).ready(function() {
-   refresh();
+$(document).ready(function () {
+    refresh();
 });
 
 function refresh() {
-  $.ajax({
-    url: "/api/data",
-    success: function(data) {
+    $.ajax({
+        url: "/api/data",
+        success: function (data) {
             renderData(data);
-    }
-  });
+        }
+    });
 }
